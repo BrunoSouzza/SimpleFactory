@@ -1,0 +1,4 @@
+﻿
+using SimpleFactory;
+
+Pizzaria.SolicitaPizza();
