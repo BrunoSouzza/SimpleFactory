@@ -1,4 +1,4 @@
-# Simple Factory (pt-br)
+# Simple Factory (en-us)
 
 ### Without using Simple Factory 
 
