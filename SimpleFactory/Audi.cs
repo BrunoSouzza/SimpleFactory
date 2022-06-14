@@ -1,20 +1,18 @@
 ﻿namespace SimpleFactory;
 
-public class Audi
+public class Audi : Car
 {
-    public string Name { get; set; }
-
     public Audi()
     {
         Name = "Audi";
     }
 
-    public void Make()
+    public override void Make()
     {
         Console.WriteLine($"Built an {Name}");
     }
 
-    public void Sale()
+    public override void Sale()
     {
         Console.WriteLine($"Sold an {Name}");
     }

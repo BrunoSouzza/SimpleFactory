@@ -115,3 +115,112 @@ Sold an Ferrari
 * Vialoção do Open/Closed (SOLID)
 ---
 ### Using Simple Factory 
+
+---
+Um **Simple Factory** permite usar interfaces para criar objetos sem expor a lógica da criação do objeto ao cliente.
+
+> Classe Car
+
+```cs
+public abstract class Car
+{
+    public string? Name { get; set; }
+    public abstract void Make();
+    public abstract void Sale();
+}
+```
+
+Note que criamos um classe abastrata permitindo que um classe concreta lhe herde e realize as implementações **Make()**, **Sale()** e **Name**.
+
+>Classe Audi
+```cs
+public class Audi : Car
+{
+    public Audi()
+    {
+        Name = "Audi";
+    }
+
+    public override void Make()
+    {
+        Console.WriteLine($"Built an {Name}");
+    }
+
+    public override void Sale()
+    {
+        Console.WriteLine($"Sold an {Name}");
+    }
+}
+```
+>Classe Ferrari
+```cs
+public class Ferrari : Car
+{
+    public Ferrari()
+    {
+        Name = $"Ferrari";
+    }
+
+    public override void Make()
+    {
+        Console.WriteLine($"Buil an {Name}");
+    }
+
+    public override void Sale()
+    {
+        Console.WriteLine($"Sold an {Name}");
+    }
+}
+```
+Fazemos agora a implementação da classe abstrata **Car** nas classes concretas **Audi** e **Ferrari**.
+
+>Classe CarFactory
+```cs
+public sealed class CarFactory
+{
+    public static Car Create(string type)
+    {
+        return type switch
+        {
+            "1" => new Audi(),
+            "2" => new Ferrari(),
+            _ => throw new ApplicationException($"The car {type} not found"),
+        };
+
+    }
+}
+```
+Note que criamos essa classe sealed para garantir que ninguem a herde. Criamos um método Create, que terá a responsabilidade de criar o Carro baseado no tipo.
+
+> Classe Dealership
+```cs
+ public class Dealership
+{
+    public static void ChooseCar()
+    {
+        Console.WriteLine("==== Choose you Car ====");
+        Console.WriteLine("1: Audi");
+        Console.WriteLine("2: Ferrari");
+
+        var chooserCar = Console.ReadLine();
+
+        try
+        {
+            var car = CarFactory.Create(chooserCar);
+            car.Make();
+            car.Sale();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+        }
+    }
+}
+```
+Observe que agora não temos mais o detalhe da implementação do lado do cliente, pois centralizamos a criação dos objetos em um local, facilitando a manutenção.
+
+>Benéfícios dessa implementação
+* Estamos programando para interfaces e não para implementações
+* Fraco acomplamento entre as classes
+* Centralizamos a criação dos objetos
+* Cliente não conhece a implementação

@@ -16,21 +16,15 @@ namespace SimpleFactory
 
             var chooserCar = Console.ReadLine();
 
-            switch (chooserCar)
+            try
             {
-                case "1":
-                    var audi = new Audi();
-                    audi.Make();
-                    audi.Sale();
-                    break;
-                case "2":
-                    var ferrari = new Ferrari();
-                    ferrari.Make();
-                    ferrari.Sale();
-                    break;
-                default:
-                    Console.WriteLine("Car does not exist!");
-                    break;
+                var car = CarFactory.Create(chooserCar);
+                car.Make();
+                car.Sale();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
             }
         }
     }
